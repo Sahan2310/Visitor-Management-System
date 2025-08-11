@@ -4,6 +4,7 @@ import com.vms.vms_backend.model.Visitor;
 import com.vms.vms_backend.repository.VisitorRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.vms.vms_backend.service.VisitorService;
 
 import java.io.IOException;
 import java.util.*;
@@ -41,6 +42,21 @@ public class VisitorsController {
     public List<Visitor> getAllVisitors() {
         return visitorRepository.findAll();
     }
+    @RestController
+@RequestMapping("/api")
+public class VisitorController {
+
+    private final VisitorService visitorService;
+
+    public VisitorController(VisitorService visitorService) {
+        this.visitorService = visitorService;
+    }
+
+    @GetMapping("/visitors")
+    public List<Visitor> getVisitors() {
+        return visitorService.getAllVisitors();
+    }
+}
 
     // POST: /api/dashboard/visitors
     @PostMapping(value = "/visitors", consumes = {"multipart/form-data"})
